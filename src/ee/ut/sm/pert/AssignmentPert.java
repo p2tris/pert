@@ -1,11 +1,9 @@
 package ee.ut.sm.pert;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -18,28 +16,27 @@ import java.util.List;
 public class AssignmentPert {
     public static void main(String[] args) throws Exception {
 
-        String filename=args[0];
-        if (filename.isEmpty()){
+        String filename = args[0];
+        if (filename.isEmpty()) {
             throw new FileNotFoundException("No filename given");
         }
 
         BufferedReader reader = new BufferedReader(new FileReader(filename));
-        ArrayList<Node> nodeList=new ArrayList<Node>();
+        ArrayList<Node> nodeList = new ArrayList<Node>();
         String line;
 
-        while ((line=reader.readLine())!=null){
-            String[] linedata=line.split(",");
+        while ((line = reader.readLine()) != null) {
+            String[] linedata = line.split(",");
 
-            Node node= new Node(linedata[0],Integer.parseInt(linedata[1]));
+            Node node = new Node(linedata[0], Integer.parseInt(linedata[1]));
 
             nodeList.add(node);
 
-            for (int i=2;i<linedata.length;i++){
-                if (linedata[i].isEmpty()){
+            for (int i = 2; i < linedata.length; i++) {
+                if (linedata[i].isEmpty()) {
                     continue;
-                }
-                else {
-                    Node predecessor=findPredecessor(nodeList,linedata[i]);
+                } else {
+                    Node predecessor = findPredecessor(nodeList, linedata[i]);
                     node.addPredecessor(predecessor);
                 }
             }
@@ -47,11 +44,11 @@ public class AssignmentPert {
 
         reader.close();
 
-        List<Node> list=new ArrayList<Node>();
-        Node lastNode= nodeList.get(nodeList.size()-1);
+        List<Node> list = new ArrayList<Node>();
+        Node lastNode = nodeList.get(nodeList.size() - 1);
 
         list.add(lastNode);
-        getCritical(lastNode,list);
+        getCritical(lastNode, list);
 
         System.out.println(list);
 
@@ -59,19 +56,18 @@ public class AssignmentPert {
         return;
     }
 
-    private static void getCritical(Node node,List<Node> criticalNodes){
-        if (node.getCriticalNode()==null){
+    private static void getCritical(Node node, List<Node> criticalNodes) {
+        if (node.getCriticalNode() == null) {
             return;
-        }
-        else {
+        } else {
             criticalNodes.add(node.getCriticalNode());
-            getCritical(node.getCriticalNode(),criticalNodes);
+            getCritical(node.getCriticalNode(), criticalNodes);
         }
     }
 
     private static Node findPredecessor(List<Node> nodeList, String s) throws Exception {
-        for (Node node:nodeList){
-            if (node.getName().equals(s)){
+        for (Node node : nodeList) {
+            if (node.getName().equals(s)) {
                 return node;
             }
         }

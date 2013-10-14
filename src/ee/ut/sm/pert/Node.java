@@ -1,6 +1,7 @@
 package ee.ut.sm.pert;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -10,11 +11,8 @@ import java.util.*;
  * To change this template use File | Settings | File Templates.
  */
 public class Node {
-    public HashSet<Node> getPredecessors() {
-        return predecessors;
-    }
 
-    private HashSet<Node> predecessors;
+    private List<Node> predecessors;
     private int duration;
     private String name;
     private int criticalCost;
@@ -25,17 +23,20 @@ public class Node {
         this.duration = duration;
     }
 
-    public void addPredecessor(Node predecessor){
-        if (predecessors==null){
-            predecessors=new HashSet<Node>();
+    public List<Node> getPredecessors() {
+        return predecessors;
+    }
+
+    public void addPredecessor(Node predecessor) {
+        if (predecessors == null) {
+            predecessors = new ArrayList<Node>();
         }
 
-        if (criticalNode==null){
-            criticalNode=predecessor;
-        }
-        else if(criticalNode.getCriticalCost()<=predecessor.getCriticalCost()){
-            this.criticalCost=predecessor.getCriticalCost()+duration;
-            this.criticalNode=predecessor;
+        if (criticalNode == null) {
+            criticalNode = predecessor;
+        } else if (criticalNode.getCriticalCost() <= predecessor.getCriticalCost()) {
+            setCriticalCost(predecessor.getCriticalCost() + duration);
+            setCriticalNode(predecessor);
         }
 
         predecessors.add(predecessor);
@@ -45,12 +46,16 @@ public class Node {
         return criticalCost;
     }
 
-    public Node getCriticalNode(){
+    public void setCriticalCost(int criticalCost) {
+        this.criticalCost = criticalCost;
+    }
+
+    public Node getCriticalNode() {
         return criticalNode;
     }
 
-    public void setCriticalCost(int criticalCost) {
-        this.criticalCost = criticalCost;
+    public void setCriticalNode(Node criticalNode) {
+        this.criticalNode = criticalNode;
     }
 
     public int getDuration() {

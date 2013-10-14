@@ -1,10 +1,6 @@
 package ee.ut.sm.pert;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,8 +40,6 @@ public class AssignmentPert {
             }
         }
 
-
-
         reader.close();
 
         List<Node> list = new ArrayList<Node>();
@@ -59,7 +53,6 @@ public class AssignmentPert {
         System.out.println(nodeList);
         System.out.println(list);
 
-        //System.out.println(nodeList);
         return;
     }
 
@@ -81,28 +74,26 @@ public class AssignmentPert {
 
         throw new Exception("Error in file, predecessor is not defined");  //To change body of created methods use File | Settings | File Templates.
     }
-    
-    private static void convertToDoc (String filename, List<Node> list) throws IOException{
-    	BufferedReader reader = new BufferedReader(new FileReader(filename));
+
+    private static void convertToDoc(String filename, List<Node> list) throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader(filename));
         String line;
-    	PrintWriter writer = new PrintWriter(filename+".dot", "UTF-8");
-    	writer.println("digraph graphname {");
-    	
-        while ((line=reader.readLine())!=null){
-            String[] linedata=line.split(",");
-            writer.println("     " + linedata[0] + " [label=\""+ linedata[0] + " (" + linedata[1] +" days)\"];");
-            for (int i=2;i<linedata.length;i++){
-                if (linedata[i].isEmpty()){
-                    continue;
-                }
-                else {
+        PrintWriter writer = new PrintWriter(filename + ".dot", "UTF-8");
+        writer.println("digraph graphname {");
+
+        while ((line = reader.readLine()) != null) {
+            String[] linedata = line.split(",");
+            writer.println("     " + linedata[0] + " [label=\"" + linedata[0] + " (" + linedata[1] + " days)\"];");
+            for (int i = 2; i < linedata.length; i++) {
+                if (linedata[i].isEmpty()) {
+                } else {
                     writer.println("     " + linedata[i] + " -> " + linedata[0] + ";");
                 }
             }
         }
-        for (int i = list.size()-1; i >= 1; i--){
-        	writer.println("     " + list.get(i).getName() + " -> " + list.get(i-1).getName() + 
-        			" [color=red]; ");
+        for (int i = list.size() - 1; i >= 1; i--) {
+            writer.println("     " + list.get(i).getName() + " -> " + list.get(i - 1).getName() +
+                    " [color=red]; ");
         }
         writer.println("}");
         writer.close();

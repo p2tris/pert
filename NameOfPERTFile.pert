@@ -1,0 +1,6 @@
+Start,0,
+Task1,4,Start
+Task2,3,Start
+Task3,2,Task2,Task1
+Task4,1,Task1
+FinalTask,3,Task4,Task3

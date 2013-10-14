@@ -45,7 +45,6 @@ public class AssignmentPert {
         }
 
 
-        convertToDoc(filename);
 
         reader.close();
 
@@ -55,6 +54,7 @@ public class AssignmentPert {
         list.add(lastNode);
         getCritical(lastNode, list);
 
+        convertToDoc(filename, list);
 
         System.out.println(nodeList);
         System.out.println(list);
@@ -82,7 +82,7 @@ public class AssignmentPert {
         throw new Exception("Error in file, predecessor is not defined");  //To change body of created methods use File | Settings | File Templates.
     }
     
-    private static void convertToDoc (String filename) throws IOException{
+    private static void convertToDoc (String filename, List<Node> list) throws IOException{
     	BufferedReader reader = new BufferedReader(new FileReader(filename));
         String line;
     	PrintWriter writer = new PrintWriter(filename+".dot", "UTF-8");
@@ -99,6 +99,10 @@ public class AssignmentPert {
                     writer.println("     " + linedata[i] + " -> " + linedata[0] + ";");
                 }
             }
+        }
+        for (int i = list.size()-1; i >= 1; i--){
+        	writer.println("     " + list.get(i).getName() + " -> " + list.get(i-1).getName() + 
+        			" [color=red]; ");
         }
         writer.println("}");
         writer.close();

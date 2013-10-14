@@ -50,8 +50,12 @@ public class AssignmentPert {
 
         convertToDoc(filename, list);
 
-        System.out.println(nodeList);
-        System.out.println(list);
+//        System.out.println(nodeList);
+//        System.out.println(list);
+        System.out.println("Good day Sir!\n" +
+        		"Your program works as expected!\n" +
+        		"You can check your .dot file next to your .pert file!\n" +
+        		"Have a nice day Sir!");
 
         return;
     }
@@ -91,12 +95,10 @@ public class AssignmentPert {
                 }
             }
         }
-        for (int i = list.size() - 1; i >= 1; i--) {
-            writer.println("     " + list.get(i).getName() + " -> " + list.get(i - 1).getName() +
-                    " [color=red]; ");
+        for (int i =  0; i <= list.size()-1; i++) {
+            writer.println("     " + list.get(i).getName() + " [color=red]; ");
         }
         writer.println("}");
         writer.close();
-        System.out.println("");
     }
 }

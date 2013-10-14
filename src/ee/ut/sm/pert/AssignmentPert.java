@@ -1,13 +1,11 @@
 package ee.ut.sm.pert;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -28,8 +26,6 @@ public class AssignmentPert {
         BufferedReader reader = new BufferedReader(new FileReader(filename));
         ArrayList<Node> nodeList = new ArrayList<Node>();
         String line;
-        while ((line=reader.readLine())!=null){
-            String[] linedata=line.split(",");
 
         while ((line = reader.readLine()) != null) {
             String[] linedata = line.split(",");
@@ -45,15 +41,12 @@ public class AssignmentPert {
                     Node predecessor = findPredecessor(nodeList, linedata[i]);
                     node.addPredecessor(predecessor);
                 }
-                else {
-                    Node predecessor=findPredecessor(nodeList,linedata[i]);
-                    node.predecessors.add(predecessor);
-                }
             }
         }
 
-        System.out.println(nodeList);
+
         convertToDoc(filename);
+
         reader.close();
 
         List<Node> list = new ArrayList<Node>();
@@ -62,6 +55,8 @@ public class AssignmentPert {
         list.add(lastNode);
         getCritical(lastNode, list);
 
+
+        System.out.println(nodeList);
         System.out.println(list);
 
         //System.out.println(nodeList);

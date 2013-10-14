@@ -24,14 +24,14 @@ public class AssignmentPert {
         }
 
         BufferedReader reader = new BufferedReader(new FileReader(filename));
-        List<Node> nodeList=new ArrayList<Node>() {
-        };
+        ArrayList<Node> nodeList=new ArrayList<Node>();
         String line;
+
         while ((line=reader.readLine())!=null){
             String[] linedata=line.split(",");
 
             Node node= new Node(linedata[0],Integer.parseInt(linedata[1]));
-            node.predecessors=new HashSet<Node>();
+
             nodeList.add(node);
 
             for (int i=2;i<linedata.length;i++){
@@ -40,13 +40,33 @@ public class AssignmentPert {
                 }
                 else {
                     Node predecessor=findPredecessor(nodeList,linedata[i]);
-                    node.predecessors.add(predecessor);
+                    node.addPredecessor(predecessor);
                 }
             }
         }
 
-        System.out.println(nodeList);
+        reader.close();
+
+        List<Node> list=new ArrayList<Node>();
+        Node lastNode= nodeList.get(nodeList.size()-1);
+
+        list.add(lastNode);
+        getCritical(lastNode,list);
+
+        System.out.println(list);
+
+        //System.out.println(nodeList);
         return;
+    }
+
+    private static void getCritical(Node node,List<Node> criticalNodes){
+        if (node.getCriticalNode()==null){
+            return;
+        }
+        else {
+            criticalNodes.add(node.getCriticalNode());
+            getCritical(node.getCriticalNode(),criticalNodes);
+        }
     }
 
     private static Node findPredecessor(List<Node> nodeList, String s) throws Exception {

@@ -1,0 +1,15 @@
+digraph graphname {
+     Start [label="Start (0 days)"];
+     Task1 [label="Task1 (4 days)"];
+     Start -> Task1;
+     Task2 [label="Task2 (3 days)"];
+     Start -> Task2;
+     Task3 [label="Task3 (2 days)"];
+     Task2 -> Task3;
+     Task1 -> Task3;
+     Task4 [label="Task4 (1 days)"];
+     Task1 -> Task4;
+     FinalTask [label="FinalTask (3 days)"];
+     Task4 -> FinalTask;
+     Task3 -> FinalTask;
+}
